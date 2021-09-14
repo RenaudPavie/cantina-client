@@ -11,13 +11,14 @@ function Accueil() {
     },[])
 
     return (
-        <div>
-             <section>
-                {recipes && recipes.map(e => 
-                    <RecipeCard data={e} />
+    <div className="container">
+        <section className="recipeWrapper">
+
+            {recipes && recipes.map(e => 
+                <RecipeCard data={e} />
                 )}
-            </section>
-        </div>
+        </section>
+    </div>
     )
 }
 

@@ -1,22 +1,22 @@
-import logo from './logo.svg';
+import {useState, useEffect} from 'react';
 import './App.css';
 
 function App() {
+
+  const [recipes, setRecipes] = useState(null)
+
+  useEffect(() => {
+    fetch('http://localhost:9000/api/recipes')
+    .then(res => res.json())
+    .then(data => setRecipes(data))
+  },[])
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {recipes && recipes.map(e => 
+          <p key={e.id}>{e.titre}</p>
+        )}
       </header>
     </div>
   );

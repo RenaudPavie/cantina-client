@@ -13,9 +13,8 @@ function Accueil() {
     return (
     <div className="container">
         <section className="recipeWrapper">
-
             {recipes && recipes.map(e => 
-                <RecipeCard data={e} />
+                <RecipeCard key={e.id} data={e} />
                 )}
         </section>
     </div>

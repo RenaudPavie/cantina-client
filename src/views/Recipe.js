@@ -10,11 +10,14 @@ function Recipe() {
         fetch(`http://localhost:9000/api/recipe/${id}`)
         .then((res) => res.json())
         .then((data) => {
+            console.log(data)
             setRecipe(data)
         });
     }, [id]);
 
     return (
+        <div className="container">
+        <section className="recipeWrapper">
         <div>
             {recipe && (
                 <div key={recipe.id}>
@@ -25,16 +28,16 @@ function Recipe() {
                     <p>{recipe.personnes}</p>
                     <p>{recipe.tempsPreparation}</p>
                     <ul>
-                        { recipe.ingredients && recipe.ingredients.map(e => (
-                            <li>
+                        { recipe.ingredients && recipe.ingredients.map((e,i) => (
+                            <li key={i}>
                                 <p>{e[0]}</p>
                                 <p>{e[1]}</p>
                             </li>
                         ))}
                     </ul>
                     <ul>
-                        { recipe.etapes && recipe.etapes.map(e => (
-                            <li>
+                        { recipe.etapes && recipe.etapes.map((e,i) => (
+                            <li key={i}>
                                 <p>{e}</p>
                             </li>
                         ))}
@@ -43,6 +46,11 @@ function Recipe() {
                     <p>{recipe.titre}</p>
                 </div>
             )}
+            {recipe && (
+                <p>{recipe.errorMessage}</p>
+            )}
+        </div>
+        </section>
         </div>
     )
 }

@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom";
+import EditBtn from './btn/EditBtn'
+import DeleteBtn from './btn/DeleteBtn'
 
 import './recipeCard.css'
 
@@ -13,6 +15,8 @@ function RecipeCard(props) {
                 <p>{data.niveau}</p>
                 <p>{data.personnes}</p>
                 <p>{data.tempsPreparation}</p>
+                <DeleteBtn  recipeId={data.id} />
+                <EditBtn recipeId={data.id} />
             </div>
         </Link>
     )

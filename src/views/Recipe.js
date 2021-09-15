@@ -24,7 +24,21 @@ function Recipe() {
                     <p>{recipe.niveau}</p>
                     <p>{recipe.personnes}</p>
                     <p>{recipe.tempsPreparation}</p>
-                    <p>{recipe.ingredients}</p>
+                    <ul>
+                        { recipe.ingredients && recipe.ingredients.map(e => (
+                            <li>
+                                <p>{e[0]}</p>
+                                <p>{e[1]}</p>
+                            </li>
+                        ))}
+                    </ul>
+                    <ul>
+                        { recipe.etapes && recipe.etapes.map(e => (
+                            <li>
+                                <p>{e}</p>
+                            </li>
+                        ))}
+                    </ul>
                     <p>{recipe.etapes}</p>
                     <p>{recipe.titre}</p>
                 </div>

@@ -16,7 +16,9 @@ function RecipeCard(props) {
                 <p>{data.personnes}</p>
                 <p>{data.tempsPreparation}</p>
                 <DeleteBtn  recipeId={data.id} />
-                <EditBtn recipeId={data.id} />
+                <Link to={"edit-recipe/" + data.id}>
+                    <EditBtn recipeId={data.id} />
+                </Link>
             </div>
         </Link>
     )

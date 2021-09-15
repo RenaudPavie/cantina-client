@@ -3,6 +3,7 @@ import {BrowserRouter, Route, NavLink} from 'react-router-dom'
 import Accueil from './views/Accueil'
 import Recipe from './views/Recipe'
 import AddRecipe from './views/AddRecipe'
+import EditRecipe from './views/EditRecipe'
 
 import './App.css';
 
@@ -21,6 +22,8 @@ function App() {
         <Route path="/recette/:id" component={Recipe} />
         {/* Formulaire d'ajout de recette */}
         <Route path="/new-recipe" component={AddRecipe} />
+        {/* Formulaire de modification de recette */}
+        <Route path="/edit-recipe/:id" component={EditRecipe} />
       </div>
     </BrowserRouter>
   );

@@ -4,12 +4,23 @@ function AddRecipe() {
     return (
     <div className="container">
         <form action="">
-            <input type="text" />
-            <input type="text" />
-            <input type="text" />
-            <input type="text" />
-            <input type="text" />
-            <input type="text" />
+            <div>
+                <h2>Liste d'ingrédients</h2>
+                <ul>
+                    <li>
+                        <input type="number" />
+                        <input type="text" />
+                        <button>X</button>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h2>Liste d'étapes</h2>
+                <textarea name="" id=""></textarea>
+                <button>X</button>
+
+            </div>
+                
         </form>
     </div>
     )

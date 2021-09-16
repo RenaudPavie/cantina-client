@@ -2,12 +2,12 @@ import React, {useState} from 'react'
 
 function AddRecette() {
     const [state, setState] = useState({
-        titre: "test",
-        description: "test",
-        niveau: "jedi",
-        personnes: 3,
-        tempsPreparation: 15,
-        ingredients: [['6','oeufs']],
+        titre: "",
+        description: "",
+        niveau: "",
+        personnes: 0,
+        tempsPreparation: 0,
+        ingredients: [],
         etapes: [],
         photo: ""
     });
@@ -15,6 +15,7 @@ function AddRecette() {
     // update the state on every change
     const handleChange = e => {
         const { name, value } = e.target;
+        
         setState(prevState => ({
           ...prevState,
           [name]: value
@@ -32,7 +33,6 @@ function AddRecette() {
         const value = e.target.value
         setNomIngredient(value)
     }
-
     const [unitIngredient,setUnitIngredient] = useState("")
     const handleUnitIngredient = e => {
         const value = e.target.value
@@ -61,7 +61,18 @@ function AddRecette() {
 
     const handleSubmit = e => {
         e.preventDefault()
-        const json = JSON.stringify(state)
+
+        const dataToSend = {
+            titre: state.titre,
+            description: state.description,
+            niveau: state.niveau,
+            personnes: parseInt(state.personnes),
+            tempsPreparation: parseInt(state.tempsPreparation),
+            ingredients: state.ingredients,
+            etapes: state.etapes,
+            photo: ""
+        }
+        const json = JSON.stringify(dataToSend)
         console.log(json)
         fetch('http://localhost:9000/api/recipes',{
             headers: {
@@ -128,7 +139,7 @@ function AddRecette() {
                         </div>
                         <div className="form-item">
                             <label htmlFor="recette-etapes">Liste d'étapes :</label>
-                            <input type="text" name="etapes" id="recette-etapes" onChange={handleEtapes} value={etapes} />
+                            <textarea name="etapes" id="recette-etapes" onChange={handleEtapes} value={etapes}></textarea>
                             <button type="button" onClick={addEtape}>Ajouter</button>
                         </div>
                     </div>
@@ -143,7 +154,7 @@ function AddRecette() {
                     <p>Titre de la recette : {state.titre}</p>
                     <p>description de la recette : {state.description}</p>
                     <p>Niveau de la recette : {state.niveau}</p>
-                    <p>Nombre de personne : {state.personnes} {state.personnes === 1  ? 'personne' : state.personnes > 1 ? 'personnes' : ""}</p>
+                    <p>Nombre de personne : {state.personnes} {state.personnes == 1  ? 'personne' : state.personnes > 1 ? 'personnes' : ""}</p>
                     <p>Temps de préparation : {state.tempsPreparation}</p>
                     <p>Liste d'ingrédients de la recette :</p>
                     <ul>

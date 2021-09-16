@@ -13,6 +13,14 @@ function Accueil() {
     return (
     <div className="container">
         <section className="recipeWrapper">
+            <div>
+                <div className="form-group">
+                <input type="text" />
+                <input type="number" />
+                <input type="number" />
+                <input type="number" />
+                </div>
+            </div>
             {recipes && recipes.map(e => 
                 <RecipeCard 
                     key={e.id} 

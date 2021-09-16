@@ -11,7 +11,6 @@ function EditRecipe() {
         fetch(`http://localhost:9000/api/recipe/${id}`)
         .then(res => res.json())
         .then(data => {
-            console.log(data.ingredients)
             setRecipe(data)
         })
     },[id])
@@ -21,8 +20,8 @@ function EditRecipe() {
             <form action="">
                 <div>
                     <h2>Liste d'ingrédients</h2>
-                    {recipe && recipe.ingredients.map(e  => (
-                        <li>
+                    {recipe && recipe.ingredients.map((e,i)  => (
+                        <li key={i}>
                             <input type="text" defaultValue={e[0]} />
                             <input type="text" defaultValue={e[1]} />
                             <button>X</button>
@@ -31,8 +30,8 @@ function EditRecipe() {
                 </div>
                 <div>
                     <h2>Liste d'étapes</h2>
-                    {recipe && recipe.etapes.map(e => (
-                        <li>
+                    {recipe && recipe.etapes.map((e,i) => (
+                        <li key={i}>
                             <textarea name="" id="" defaultValue={e} ></textarea>
                             <button>X</button>
                         </li>

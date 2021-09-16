@@ -23,12 +23,38 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 80%;
+  margin: auto;
 }
 .recipeWrapper {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   flex-wrap: wrap;
   max-width: 80%;
   padding:15px;
+}
+
+/* Formulaire d'ajout de recette */
+
+.container.form-add {
+  flex-direction: column;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.col {
+  width: 50%;
+}
+.form {
+  width: 80%;
+  margin: auto;
+}
+.form-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }

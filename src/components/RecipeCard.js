@@ -8,18 +8,20 @@ import './recipeCard.css'
 function RecipeCard(props) {
     const data = props.data;
     return (
-        <div className="recipeCard">
-            <Link to={"recette/" + data.id}>
-                <div>
-                    <p>{data.titre}</p>
+        <div className="card">
+            <Link className="card-info" to={"recette/" + data.id}>
+                
                     <img src={data.photo} alt={data.titre} />
-                    <p>{data.niveau}</p>
-                    <p>{data.personnes}</p>
-                    <p>{data.tempsPreparation}</p>
-                </div>
+                    <div className="card-text">
+                        <h3>{data.titre}</h3>
+                        <p>Difficulté : <span className="bold">{data.niveau}</span></p>
+                        <p>Pour : {data.personnes} {data.personnes === 1  ? 'personne' : data.personnes > 1 ? 'personnes' : ""}</p>
+                        <p>Temps estimé : {data.tempsPreparation} min</p>
+                    </div>
+                
             </Link>
-            <DeleteBtn  recipeId={data.id} />
             <EditBtn recipeId={data.id} />
+            <DeleteBtn  recipeId={data.id} />
         </div>
     )
 }

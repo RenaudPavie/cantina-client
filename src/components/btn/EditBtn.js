@@ -5,7 +5,7 @@ function EditBtn(props) {
     const id = props.recipeId
     return (
         <Link to={`/edit-recipe/${id}`}>
-            <button>Modifier</button>
+            <button className="editBtn btn">Modifier</button>
         </Link>
     )
 }

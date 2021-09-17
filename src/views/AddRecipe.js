@@ -15,7 +15,6 @@ function AddRecette() {
     // update the state on every change
     const handleChange = e => {
         const { name, value } = e.target;
-        
         setState(prevState => ({
           ...prevState,
           [name]: value
@@ -40,13 +39,13 @@ function AddRecette() {
     }
     const addIngredient = e => {
         e.preventDefault()
-        const isUnit = unitIngredient !== "" ? unitIngredient : ""
-        setState(prevState => ({...prevState,
-            ingredients: [...prevState.ingredients, [qteIngredient + isUnit ,nomIngredient]]
+        const unit = unitIngredient !== "" ? unitIngredient : ""
+        setState(prevState => ({...prevState,          
+            ingredients: [...prevState.ingredients, [qteIngredient + unit ,nomIngredient]]
         }));
     }
 
-
+    // Handle step
     const [etapes,setEtapes] = useState([])
     const handleEtapes = e => {
         const value = e.target.value
@@ -61,7 +60,6 @@ function AddRecette() {
 
     const handleSubmit = e => {
         e.preventDefault()
-
         const dataToSend = {
             titre: state.titre,
             description: state.description,
@@ -70,7 +68,7 @@ function AddRecette() {
             tempsPreparation: parseInt(state.tempsPreparation),
             ingredients: state.ingredients,
             etapes: state.etapes,
-            photo: ""
+            photo: state.photo
         }
         const json = JSON.stringify(dataToSend)
         console.log(json)
@@ -125,8 +123,8 @@ function AddRecette() {
                     <div className="listToAdd">
 
                         <div className="form-item">
-                            <label htmlFor="recette-tpsPrepa">Liste d'ingrédients :</label>
-                            <input type="number" name="qteIngredient" id="recette-tpsPrepa" onChange={handleQteIngredient} value={qteIngredient}/>
+                            <label htmlFor="recette-ingredients">Liste d'ingrédients :</label>
+                            <input type="number" name="qteIngredient" id="recette-ingredients" onChange={handleQteIngredient} value={qteIngredient}/>
                             <select name="unitIngredient" id="" onChange={handleUnitIngredient} value={unitIngredient}>
                                 <option value=""></option>
                                 <option value="mg">mg</option>
@@ -137,10 +135,15 @@ function AddRecette() {
                             <input type="text" name="nomIngredient" id="recette-tpsPrepa" onChange={handleNomIngredient} value={nomIngredient}/>
                             <button onClick={addIngredient}>Ajouter</button>
                         </div>
+
                         <div className="form-item">
                             <label htmlFor="recette-etapes">Liste d'étapes :</label>
                             <textarea name="etapes" id="recette-etapes" onChange={handleEtapes} value={etapes}></textarea>
                             <button type="button" onClick={addEtape}>Ajouter</button>
+                        </div>
+                        <div className="form-item">
+                            <label htmlFor="photo">Photo de la recette (lien absolu)</label>
+                            <input type="text" id="photo" name="photo" value={state.photo} onChange={handleChange} />
                         </div>
                     </div>
                    
@@ -154,7 +157,7 @@ function AddRecette() {
                     <p>Titre de la recette : {state.titre}</p>
                     <p>description de la recette : {state.description}</p>
                     <p>Niveau de la recette : {state.niveau}</p>
-                    <p>Nombre de personne : {state.personnes} {state.personnes == 1  ? 'personne' : state.personnes > 1 ? 'personnes' : ""}</p>
+                    <p>Nombre de personne : {state.personnes} {state.personnes === "1"  ? 'personne' : state.personnes > 1 ? 'personnes' : ""}</p>
                     <p>Temps de préparation : {state.tempsPreparation}</p>
                     <p>Liste d'ingrédients de la recette :</p>
                     <ul>
@@ -168,7 +171,7 @@ function AddRecette() {
                             <li key={i}>{e}</li>
                         ))}
                     </ul>
-                    {/* <p>Titre de la recette : {state.photo}</p> */}
+                    <p>Photo de la recette : <img src={state.photo} alt={state.titre} /></p>
                 </div>
             </div>
         </div>

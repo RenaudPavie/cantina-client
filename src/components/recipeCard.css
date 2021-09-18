@@ -1,7 +1,7 @@
 .card {
-    width: 300px;
+    min-width: 250px;
     height: 350px;
-    position: relative;
+    margin-left: 10px;
     margin-bottom: 15px;
     background:rgb(255, 255, 255);
     box-shadow: 2px 2px 5px #24242480;
@@ -9,7 +9,6 @@
 .card-info {
     display: flex;
     flex-direction: column;
-    height: 100%;
     width: 100%;
     z-index: 1;
 }
@@ -28,7 +27,6 @@
 .card-text p {
     margin:0
 }
-
 .card-btn {
     display: flex;
     justify-content: space-between;

@@ -24,17 +24,17 @@ function AddRecette() {
     // Handle list of ingredients
     const [qteIngredient,setQteIngredient] = useState("")
     const handleQteIngredient = e => {
-        const value = e.target.value
+        const {value} = e.target
         setQteIngredient(value)
     }
     const [nomIngredient,setNomIngredient] = useState("")
     const handleNomIngredient = e => {
-        const value = e.target.value
+        const {value} = e.target
         setNomIngredient(value)
     }
     const [unitIngredient,setUnitIngredient] = useState("")
     const handleUnitIngredient = e => {
-        const value = e.target.value
+        const {value} = e.target
         setUnitIngredient(value)
     }
     const addIngredient = e => {
@@ -48,14 +48,27 @@ function AddRecette() {
     // Handle step
     const [etapes,setEtapes] = useState([])
     const handleEtapes = e => {
-        const value = e.target.value
+        const {value} = e.target
         setEtapes(value)
     }
     const addEtape = e => {
         e.preventDefault()
+        console.log(e)
+        if (etapes.length !== 0) {
+            setState(prevState => ({...prevState,
+                etapes: [...prevState.etapes, etapes]
+            }));
+            setEtapes([])
+        } else {
+            alert('Aucune étapes n\'a été détecté')
+        }
+    }
+    const removeFromList = (e,index,str) => {
+        e.preventDefault()
+        const newArr = state.etapes.filter(item => item !== state.etapes[index] )
         setState(prevState => ({...prevState,
-            etapes: [...prevState.etapes, etapes]
-        }));
+            [str]: newArr
+        }))
     }
 
     const handleSubmit = e => {
@@ -85,9 +98,8 @@ function AddRecette() {
             console.log(data)
         })
     }
-
     return (
-    <div className="container form-add">
+    <div className="container">
         <h1>Ajouter une nouvelle recette</h1>
         <div className="row">
 
@@ -114,64 +126,75 @@ function AddRecette() {
 
                     <div className="form-item">
                         <label htmlFor="recette-personnes">Nombre de personne</label>
-                        <input type="number" name="personnes" id="recette-personnes" onChange={handleChange} value={state.personnes}/>
+                        <input type="number" min="0" name="personnes" id="recette-personnes" onChange={handleChange} value={state.personnes}/>
                     </div>
                     <div className="form-item">
                         <label htmlFor="recette-tpsPrepa">Temps de préparation</label>
-                        <input type="number" name="tempsPreparation" id="recette-tpsPrepa" onChange={handleChange} value={state.tempsPreparation}/>
+                        <input type="number" min="0" name="tempsPreparation" id="recette-tpsPrepa" onChange={handleChange} value={state.tempsPreparation}/>
                     </div>
-                    <div className="listToAdd">
 
                         <div className="form-item">
                             <label htmlFor="recette-ingredients">Liste d'ingrédients :</label>
-                            <input type="number" name="qteIngredient" id="recette-ingredients" onChange={handleQteIngredient} value={qteIngredient}/>
-                            <select name="unitIngredient" id="" onChange={handleUnitIngredient} value={unitIngredient}>
-                                <option value=""></option>
-                                <option value="mg">mg</option>
-                                <option value="g">g</option>
-                                <option value="ml">ml</option>
-                                <option value="cl">cl</option>
-                            </select>
-                            <input type="text" name="nomIngredient" id="recette-tpsPrepa" onChange={handleNomIngredient} value={nomIngredient}/>
+                                <div className="listToAdd">
+                                    <input type="number" min="0" name="qteIngredient" id="recette-ingredients" onChange={handleQteIngredient} value={qteIngredient}/>
+                                    <select name="unitIngredient" id="" onChange={handleUnitIngredient} value={unitIngredient}>
+                                        <option value=""></option>
+                                        <option value="mg">mg</option>
+                                        <option value="g">g</option>
+                                        <option value="ml">ml</option>
+                                        <option value="cl">cl</option>
+                                    </select>
+                                    <input type="text" name="nomIngredient" id="recette-tpsPrepa" onChange={handleNomIngredient} value={nomIngredient}/>
+                            </div>
                             <button onClick={addIngredient}>Ajouter</button>
                         </div>
 
                         <div className="form-item">
                             <label htmlFor="recette-etapes">Liste d'étapes :</label>
-                            <textarea name="etapes" id="recette-etapes" onChange={handleEtapes} value={etapes}></textarea>
-                            <button type="button" onClick={addEtape}>Ajouter</button>
+                            <div className="addStep">
+                                <textarea name="etapes" id="recette-etapes" onChange={handleEtapes} value={etapes}></textarea>
+                                <button type="button" className="btnAdd" onClick={addEtape}>Ajouter</button>
+                            </div>
                         </div>
                         <div className="form-item">
                             <label htmlFor="photo">Photo de la recette (lien absolu)</label>
                             <input type="text" id="photo" name="photo" value={state.photo} onChange={handleChange} />
                         </div>
-                    </div>
+                    
                    
 
 
                     <button>submit</button>
                 </form>
             </div>
-            <div className="col">
+            <div className="col preview">
                 <div>
-                    <p>Titre de la recette : {state.titre}</p>
-                    <p>description de la recette : {state.description}</p>
+                    <h2>{state.titre !== "" ? state.titre : "Titre de la recette"}</h2>
+                    {state.photo !== "" ? <div className="img"><img src={state.photo} alt="" /></div> : <div className="img"><p>Photo de la recette</p></div>}
+                    
+                    <p>{state.description !== "" ? state.description : "Description de la recette"}</p>
                     <p>Niveau de la recette : {state.niveau}</p>
                     <p>Nombre de personne : {state.personnes} {state.personnes === "1"  ? 'personne' : state.personnes > 1 ? 'personnes' : ""}</p>
-                    <p>Temps de préparation : {state.tempsPreparation}</p>
+                    <p>Temps de préparation : {state.tempsPreparation} min</p>
                     <p>Liste d'ingrédients de la recette :</p>
                     <ul>
-                        {state.ingredients && state.ingredients.map((e,i) => (
-                            <li key={i}>{e[0]} - {e[1]}</li>
+                        {state.ingredients && state.ingredients.map((el,i) => (
+                            <li key={i}>
+                                {el[0]} - {el[1]}
+                                {/* <RemoveItemBtn id={i}/> */}
+                                <button onClick={e => removeFromList(e,i,"ingredients")}>X</button>
+                            </li>
                         ))}
                     </ul>
                     <p>Etapes de la recette : </p>
                     <ul>
-                        {state.etapes && state.etapes.map((e,i) => (
-                            <li key={i}>{e}</li>
+                        {state.etapes && state.etapes.map((el,i) => (
+                            <li key={i}>{el} {i}
+                                {/* <RemoveItemBtn list={state.etapes} id={i}/> */}
+                                <button onClick={e => removeFromList(e,i,"etapes")}>X</button>
+                            </li>
                         ))}
                     </ul>
-                    <p>Photo de la recette : <img src={state.photo} alt={state.titre} /></p>
                 </div>
             </div>
         </div>

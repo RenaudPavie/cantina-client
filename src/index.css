@@ -6,7 +6,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+*,*::after,*::before {
+  box-sizing: border-box;
+  margin:0;
+  padding:0
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -17,4 +21,8 @@ a,a:focus {
 }
 ul {
   list-style-type: none;
+}
+h1,h2 {
+ text-transform: uppercase;
+ margin-bottom: 15px;
 }

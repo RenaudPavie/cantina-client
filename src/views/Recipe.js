@@ -17,40 +17,45 @@ function Recipe() {
 
     return (
         <div className="container">
-        <section className="recipeWrapper">
-        <div>
-            {recipe && (
-                <div key={recipe.id}>
-                    <p>{recipe.titre}</p>
-                    <img src={recipe.photo} alt="" />
-                    <p>{recipe.description}</p>
-                    <p>{recipe.niveau}</p>
-                    <p>{recipe.personnes}</p>
-                    <p>{recipe.tempsPreparation}</p>
-                    <ul>
-                        { recipe.ingredients && recipe.ingredients.map((e,i) => (
-                            <li key={i}>
-                                <p>{e[0]}</p>
-                                <p>{e[1]}</p>
-                            </li>
-                        ))}
-                    </ul>
-                    <ul>
-                        { recipe.etapes && recipe.etapes.map((e,i) => (
-                            <li key={i}>
-                                <p>{e}</p>
-                            </li>
-                        ))}
-                    </ul>
-                    <p>{recipe.etapes}</p>
-                    <p>{recipe.titre}</p>
-                </div>
-            )}
-            {recipe && (
-                <p>{recipe.errorMessage}</p>
-            )}
-        </div>
-        </section>
+                    {recipe && (
+                        <section className="recipeWrapper">
+                            <img src={recipe.photo} alt={recipe.titre} />
+                            <h1 className="mainTitle">{recipe.titre}</h1>
+                            <div className="recipe">
+
+                                <div className="recipe-text">
+                                    <p>{recipe.description}</p>
+                                    <p>Temps : {recipe.tempsPreparation} min</p>
+                                    <p>Prévu pour : {recipe.personnes} {recipe.personnes === 1  ? 'personne' : recipe.personnes > 1 ? 'personnes' : ""}</p>
+                                    <p>Difficulté : {recipe.niveau}</p>
+                                    <p>
+                                        Étapes à respecter :
+                                    </p>
+                                    <ol>
+                                        { recipe.etapes && recipe.etapes.map((e,i) => (
+                                            <li key={i}>
+                                                <p>{e}</p>
+                                            </li>
+                                        ))}
+                                    </ol>
+                                </div>
+                                <div className="ingredients">
+                                    <h2>Ingredients</h2>
+                                    <ul>
+                                        { recipe.ingredients && recipe.ingredients.map((e,i) => (
+                                            <li key={i}>
+                                                <p>{e[0]} {e[1]}</p>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                    </section>
+                    )}
+                    {recipe && (
+                        <p>{recipe.errorMessage}</p>
+                    )}
         </div>
     )
 }

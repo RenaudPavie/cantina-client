@@ -32,15 +32,15 @@ function DeleteBtn(props) {
                         <Link className="btn noBtn" to="/">
                             ok
                         </Link> : 
-                        <button onClick={() => window.location.reload(false)} className="noBtn btn">Ok</button>
+                        <button onClick={() => window.location.reload(false)} className="editBtn btn">Ok</button>
                         }
                         
                     </div> : 
                     <div className="popup">
                             <p>Êtes-vous sur de vouloir supprimer cette recette ?</p>
                             <div>
-                                <button onClick={handlePopup} className="noBtn btn">Non</button>
-                                <button type="button" onClick={deleteRecipe} className="yesBtn btn">Oui</button>
+                                <button onClick={handlePopup} className="deleteBtn btn">Non</button>
+                                <button type="button" onClick={deleteRecipe} className="editBtn btn">Oui</button>
                             </div>
                     </div>
                     }

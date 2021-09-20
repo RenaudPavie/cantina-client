@@ -1,10 +1,13 @@
 import React, {useState,useEffect} from 'react'
 import { useParams } from "react-router-dom";
+import DeleteBtn from '../components/btn/DeleteBtn';
+import EditBtn from '../components/btn/EditBtn';
 
 function Recipe() {
     const params = useParams();
     const id = params.id;
     const [recipe, setRecipe] = useState(null);
+    
 
     useEffect(() => {
         fetch(`http://localhost:9000/api/recipe/${id}`)
@@ -14,22 +17,25 @@ function Recipe() {
             setRecipe(data)
         });
     }, [id]);
-
+    const showTime = () => {
+        const heure = Math.floor(recipe.tempsPreparation / 60);
+        const minutes = recipe.tempsPreparation % 60;
+        const compactTime = heure > 0 ? heure + "h" : "";
+        const finalTime = compactTime + minutes
+        return finalTime
+    }
+    
     return (
         <div className="container">
                     {recipe && (
                         <section className="recipeWrapper">
-                            <img src={recipe.photo} alt={recipe.titre} />
                             <h1 className="mainTitle">{recipe.titre}</h1>
                             <div className="recipe">
-
                                 <div className="recipe-text">
+                                    <img src={recipe.photo} alt={recipe.titre} />
                                     <p>{recipe.description}</p>
-                                    <p>Temps : {recipe.tempsPreparation} min</p>
-                                    <p>Prévu pour : {recipe.personnes} {recipe.personnes === 1  ? 'personne' : recipe.personnes > 1 ? 'personnes' : ""}</p>
-                                    <p>Difficulté : {recipe.niveau}</p>
                                     <p>
-                                        Étapes à respecter :
+                                    <span className="bold">Étapes à respecter :</span>
                                     </p>
                                     <ol>
                                         { recipe.etapes && recipe.etapes.map((e,i) => (
@@ -40,7 +46,10 @@ function Recipe() {
                                     </ol>
                                 </div>
                                 <div className="ingredients">
-                                    <h2>Ingredients</h2>
+                                    <p><span className="bold">Temps :</span> {showTime()} min</p>
+                                    <p><span className="bold">Difficulté :</span> {recipe.niveau}</p>
+                                    <p><span className="bold">Prévu pour :</span> {recipe.personnes} {recipe.personnes === 1  ? 'personne' : recipe.personnes > 1 ? 'personnes' : ""}</p>
+                                    <p><span className="bold">Ingredients : </span></p>
                                     <ul>
                                         { recipe.ingredients && recipe.ingredients.map((e,i) => (
                                             <li key={i}>
@@ -48,6 +57,10 @@ function Recipe() {
                                             </li>
                                         ))}
                                     </ul>
+                                    <div className="btn-col">
+                                        <DeleteBtn refresh={true} recipeId={recipe.id} />
+                                        <EditBtn recipeId={recipe.id} />
+                                    </div>
                                 </div>
                             </div>
                             

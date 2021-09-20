@@ -32,17 +32,18 @@ function AddRecette() {
         const {value} = e.target
         setNomIngredient(value)
     }
-    const [unitIngredient,setUnitIngredient] = useState("")
-    const handleUnitIngredient = e => {
-        const {value} = e.target
-        setUnitIngredient(value)
-    }
     const addIngredient = e => {
         e.preventDefault()
-        const unit = unitIngredient !== "" ? unitIngredient : ""
-        setState(prevState => ({...prevState,          
-            ingredients: [...prevState.ingredients, [qteIngredient + unit ,nomIngredient]]
-        }));
+        if (nomIngredient !== "") {
+            setState(prevState => ({...prevState,          
+                ingredients: [...prevState.ingredients, [qteIngredient ,nomIngredient]]
+            }));
+            setQteIngredient("")
+            setNomIngredient("")
+        } else {
+            alert('Aucun ingrédient détecté')
+        }
+        
     }
 
     // Handle step
@@ -53,7 +54,6 @@ function AddRecette() {
     }
     const addEtape = e => {
         e.preventDefault()
-        console.log(e)
         if (etapes.length !== 0) {
             setState(prevState => ({...prevState,
                 etapes: [...prevState.etapes, etapes]
@@ -63,9 +63,11 @@ function AddRecette() {
             alert('Aucune étapes n\'a été détecté')
         }
     }
-    const removeFromList = (e,index,str) => {
+    const removeFromList = (e,index,str,arr) => {
         e.preventDefault()
-        const newArr = state.etapes.filter(item => item !== state.etapes[index] )
+        console.log(index)
+        const newArr = arr;
+        newArr.splice(index,1)
         setState(prevState => ({...prevState,
             [str]: newArr
         }))
@@ -84,7 +86,6 @@ function AddRecette() {
             photo: state.photo
         }
         const json = JSON.stringify(dataToSend)
-        console.log(json)
         fetch('http://localhost:9000/api/recipes',{
             headers: {
                 'Accept': 'application/json',
@@ -96,12 +97,13 @@ function AddRecette() {
         .then(res => res.json())
         .then(data => {
             console.log(data)
+            window.location.replace('/')
         })
     }
     return (
     <div className="container">
-        <h1>Ajouter une nouvelle recette</h1>
-        <div className="row">
+        <h1 className="mainTitle">Ajouter une nouvelle recette</h1>
+        <div className="row formAdd">
 
             <div className="col">
                 <form action="" className="form" onSubmit={handleSubmit}>
@@ -136,35 +138,25 @@ function AddRecette() {
                         <div className="form-item">
                             <label htmlFor="recette-ingredients">Liste d'ingrédients :</label>
                                 <div className="listToAdd">
-                                    <input type="number" min="0" name="qteIngredient" id="recette-ingredients" onChange={handleQteIngredient} value={qteIngredient}/>
-                                    <select name="unitIngredient" id="" onChange={handleUnitIngredient} value={unitIngredient}>
-                                        <option value=""></option>
-                                        <option value="mg">mg</option>
-                                        <option value="g">g</option>
-                                        <option value="ml">ml</option>
-                                        <option value="cl">cl</option>
-                                    </select>
-                                    <input type="text" name="nomIngredient" id="recette-tpsPrepa" onChange={handleNomIngredient} value={nomIngredient}/>
+                                    <input type="text" name="qteIngredient" placeholder="Quantité" id="recette-ingredients" onChange={handleQteIngredient} value={qteIngredient}/>
+                                    
+                                    <input type="text" name="nomIngredient" placeholder="Nom de l'ingrédient" id="recette-tpsPrepa" onChange={handleNomIngredient} value={nomIngredient}/>
+                                    <button className="btn addBtn" onClick={addIngredient}>✓</button>
                             </div>
-                            <button onClick={addIngredient}>Ajouter</button>
                         </div>
 
                         <div className="form-item">
                             <label htmlFor="recette-etapes">Liste d'étapes :</label>
                             <div className="addStep">
                                 <textarea name="etapes" id="recette-etapes" onChange={handleEtapes} value={etapes}></textarea>
-                                <button type="button" className="btnAdd" onClick={addEtape}>Ajouter</button>
+                                <button type="button" className="btn addBtn" onClick={addEtape}>✓</button>
                             </div>
                         </div>
                         <div className="form-item">
                             <label htmlFor="photo">Photo de la recette (lien absolu)</label>
                             <input type="text" id="photo" name="photo" value={state.photo} onChange={handleChange} />
                         </div>
-                    
-                   
-
-
-                    <button>submit</button>
+                        <button className="btn submitBtn">Créer la nouvelle recette</button>
                 </form>
             </div>
             <div className="col preview">
@@ -172,29 +164,27 @@ function AddRecette() {
                     <h2>{state.titre !== "" ? state.titre : "Titre de la recette"}</h2>
                     {state.photo !== "" ? <div className="img"><img src={state.photo} alt="" /></div> : <div className="img"><p>Photo de la recette</p></div>}
                     
-                    <p>{state.description !== "" ? state.description : "Description de la recette"}</p>
-                    <p>Niveau de la recette : {state.niveau}</p>
-                    <p>Nombre de personne : {state.personnes} {state.personnes === "1"  ? 'personne' : state.personnes > 1 ? 'personnes' : ""}</p>
-                    <p>Temps de préparation : {state.tempsPreparation} min</p>
-                    <p>Liste d'ingrédients de la recette :</p>
+                    <p className="description">{state.description !== "" ? state.description : "Description de la recette"}</p>
+                    <p><span className="bold">Niveau de la recette :</span> {state.niveau}</p>
+                    <p><span className="bold">Nombre de personne :</span> {state.personnes} {state.personnes === "1"  ? 'personne' : state.personnes > 1 ? 'personnes' : ""}</p>
+                    <p><span className="bold">Temps de préparation :</span> {state.tempsPreparation} min</p>
+                    <p><span className="bold">Liste d'ingrédients de la recette :</span></p>
                     <ul>
                         {state.ingredients && state.ingredients.map((el,i) => (
                             <li key={i}>
                                 {el[0]} - {el[1]}
-                                {/* <RemoveItemBtn id={i}/> */}
-                                <button onClick={e => removeFromList(e,i,"ingredients")}>X</button>
+                                <button className="removeBtn btn" onClick={e => removeFromList(e,i,"ingredients",state.ingredients)}>X</button>
                             </li>
                         ))}
                     </ul>
-                    <p>Etapes de la recette : </p>
-                    <ul>
+                    <p><span className="bold"> Etapes de la recette :</span> </p>
+                    <ol>
                         {state.etapes && state.etapes.map((el,i) => (
-                            <li key={i}>{el} {i}
-                                {/* <RemoveItemBtn list={state.etapes} id={i}/> */}
-                                <button onClick={e => removeFromList(e,i,"etapes")}>X</button>
+                            <li key={i}>{el}
+                                <button className="removeBtn btn" onClick={e => removeFromList(e,i,"etapes",state.etapes)}>X</button>
                             </li>
                         ))}
-                    </ul>
+                    </ol>
                 </div>
             </div>
         </div>

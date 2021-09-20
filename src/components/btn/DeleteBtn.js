@@ -1,4 +1,6 @@
 import React, {useState} from 'react'
+import {Link} from 'react-router-dom'
+
 
 function DeleteBtn(props) {
     const id = props.recipeId
@@ -26,7 +28,13 @@ function DeleteBtn(props) {
                     { message !== "" ? 
                     <div className="popup">
                         <p>{message}</p>
+                        {props.refresh === true ?
+                        <Link className="btn noBtn" to="/">
+                            ok
+                        </Link> : 
                         <button onClick={() => window.location.reload(false)} className="noBtn btn">Ok</button>
+                        }
+                        
                     </div> : 
                     <div className="popup">
                             <p>Êtes-vous sur de vouloir supprimer cette recette ?</p>

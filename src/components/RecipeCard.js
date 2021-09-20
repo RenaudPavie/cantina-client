@@ -7,6 +7,13 @@ import './recipeCard.css'
 
 function RecipeCard(props) {
     const data = props.data;
+    const showTime = () => {
+        const heure = Math.floor(data.tempsPreparation / 60);
+        const minutes = data.tempsPreparation % 60;
+        const compactTime = heure > 0 ? heure + "h" : "";
+        const finalTime = compactTime + minutes
+        return finalTime
+    }
     return (
         <div className="card">
             <Link className="card-info" to={"recette/" + data.id}>
@@ -15,12 +22,12 @@ function RecipeCard(props) {
                     <h3>{data.titre}</h3>
                     <p>Difficulté : <span className="bold">{data.niveau}</span></p>
                     <p>Pour : {data.personnes} {data.personnes === 1  ? 'personne' : data.personnes > 1 ? 'personnes' : ""}</p>
-                    <p>Temps estimé : {data.tempsPreparation} min</p>
+                    <p>Temps estimé : {showTime()} min</p>
                 </div>
             </Link>
             <div className="card-btn">
                 <EditBtn recipeId={data.id} />
-                <DeleteBtn  recipeId={data.id} />
+                <DeleteBtn refresh={false} recipeId={data.id} />
             </div>
         </div>
     )

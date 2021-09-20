@@ -1,16 +1,15 @@
 .App-header {
-  background-color: #2c313f;
+  background-color: #a77f4c;
   min-height: 80px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 .App-header a {
   color: #fff;
-  margin-right: 15px;
   position: relative;
   font-weight: 400;
-  font-size: 1.5rem
+  font-size: 1.2rem
 }
 .App {
   display: flex;
@@ -53,7 +52,6 @@
   height: 100%;
 }
 @media screen and (max-width:1169.98px) {
-
   .recipe-col{
     width: 60%;
   }
@@ -80,9 +78,14 @@
 .filter-group {
   position: sticky;
   top: 15px;
-  border: 1px solid black;
-  background-color: #2c313f;
+  background-color: #a77f4c;
   padding:15px
+}
+.filter-group input {
+  padding:5px
+}
+#searchBar {
+  padding: 5px;
 }
 .filter-item {
   display: flex;
@@ -96,7 +99,7 @@
   justify-content: space-evenly;
 }
 .filter-item .nbPers input {
-  max-width: 40px;
+  max-width: 50px;
 }
 .filter-checkbox {
   display: flex;
@@ -112,6 +115,7 @@
 }
 .recipe {
   display: flex;
+  width: 100%;
 }
 .recipeWrapper img {
   width: 100%;
@@ -121,6 +125,7 @@
 }
 .recipe .recipe-text {
   padding-right:15px;
+  width: 100%;
 }
 .recipe-text p {
   font-size: 1.1em;
@@ -141,12 +146,20 @@
 }
 .ingredients li::before {
   content:'';
-  width: 7px;
+  width: 5px;
   height: 2px;
-  background-color: black;
+  background-color: #2c313f;
   position: absolute;
-  left: 0;
+  left: 2px;
   top: 50%;
+}
+@media screen and (max-width: 850px) {
+  .recipe {
+    flex-direction: column;
+  }
+  .recipe .ingredients {
+    width: 100%;
+  }
 }
 /* Formulaire d'ajout de recette */
 
@@ -155,16 +168,11 @@
   margin-bottom: 50px;
 
 }
-.form-add .row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
 .col {
   width: 50%;
   padding: 0 15px;
 }
+
 .form {
   width: 80%;
   margin: auto;
@@ -178,25 +186,19 @@
   width: 100%;
   margin-bottom: 15px;
 }
-.listToAdd {
+.listToAdd,.addStep {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between
+}
+.listToAdd input {
+  width: 50%;
 }
 .addStep {
   flex-direction: row;
 }
-.btnAdd {
-  padding:5px 10px;
-  height: 100%;
-  width: 100%;
-}
 .addStep textarea {
-  width: 80%;
-}
-.addStep button {
-  width: 20%;
+  width: 100%;
 }
 .form-add label {
   margin-bottom: 5px;
@@ -211,12 +213,28 @@
   max-width: 100%;
 }
 .preview {
-  border-left :1px solid black;
-  padding: 0 15px;
-  height: 100%;
+  padding: 15px;
+  margin:15px;
+  background-color: #a77f4c30;
+}
+@media screen and (max-width:1169.98px) {
+
+  .row.formAdd {
+    flex-direction: column;
+  }
+  .col {
+    width: 100%;
+    padding:0;
+  }
+  .form {
+    width: 100%;
+  }
+  .preview {
+    padding: 15px;
+  }
 }
 .preview h2 {
-  text-align: center;
+  border-bottom:4px solid #2c313f;
 }
 .preview .img {
   width: 100%;
@@ -229,6 +247,70 @@
   max-width: 50%;
   max-height: 100%;
 }
+.preview p {
+  margin: 15px 0;
+  font-size: 1rem;
+}
+.preview ul {
+  list-style-type: disc;
+  padding-left: 25px;
+}
+.preview ol {
+  padding-left: 25px;
+}
+.preview li {
+  margin-bottom: 15px;
+}
+.preview li .btn {
+  margin-left: 15px;
+}
+
+.row-edit {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid #2c313f;
+
+}
+
+/* Pages edit  */
+.edit-form {
+  background:#a77f4c30;
+  padding:15px;
+  margin-bottom: 15px;
+}
+.edit-col {
+  width: 33%;
+  display: flex;
+  flex-direction: column;
+  padding:15px
+}
+.edit-col:not(:last-child) {
+  border-right: 2px solid #2c313f;
+}
+@media screen and (max-width:1199.98px) {
+  .row-edit {
+    flex-direction: column;
+  }
+  .edit-col {
+    width: 100%;
+  }
+  .edit-col:not(:last-child) {
+    border-right: none;
+  }
+}
+.edit-form textarea,.edit-form input {
+  width: 100%;
+  max-width: 100%;
+  padding:5px;
+}
+.edit-form input[name="qte"],.edit-form input[name="qteIngredient"] {
+  width: 25%;
+}
+.list-item {
+  display: flex;
+  margin-bottom: 15px
+}
 
 /* BTN */
 .btn {
@@ -238,16 +320,33 @@
   border-radius: 5px;
   cursor: pointer;
 }
-.editBtn {
-  background-color: rgb(20, 98, 214);
+.addBtn {
+  margin-left: 15px;
 }
-.deleteBtn {
-  background-color: rgb(175, 50, 50);
+.editBtn,.addBtn {
+  background-color:#138496;
 }
-
+.deleteBtn,.removeBtn {
+  background-color: #dc3545;
+}
+.btn-col {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 30px;
+}
+.removeBtn {
+  margin-left: 15px;
+}
+.submitBtn{
+  background-color: #218838;
+  width: 60%;
+  padding: 5px;
+  font-size: 1.2em;
+}
 /* POPUP */
 .popup-container {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
@@ -259,14 +358,17 @@
 }
 .popup {
   width: 300px;
-  padding:15px;
-  height: 100px;
+  padding:20px;
+  max-height: 130px;
   background-color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   border-radius: 5px;
+}
+.popup p {
+  margin-bottom: 15px;
 }
 .popup .noBtn {
   background-color: rgb(20, 98, 214);
@@ -274,4 +376,13 @@
 .popup .yesBtn {
   background-color: rgb(175, 50, 50);
   margin-left: 15px;
+}
+
+div.alert-msg {
+  background-color: aliceblue;
+  padding:15px;
+  margin:15px 0
+}
+.bold {
+  font-weight: bold;
 }

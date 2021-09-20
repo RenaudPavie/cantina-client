@@ -13,7 +13,7 @@ function App() {
       <div className="App">
         <header className="App-header">
           <NavLink to="/" activeClassName="selected" exact>Recettes</NavLink>
-          <NavLink to="/new-recipe" exact>Ajouter une nouvelle recette</NavLink>
+          <NavLink to="/new-recipe" exact>Ajouter une recette</NavLink>
         </header>
 
         {/* Accueil */}

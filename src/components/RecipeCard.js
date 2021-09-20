@@ -16,7 +16,7 @@ function RecipeCard(props) {
     }
     return (
         <div className="card">
-            <Link className="card-info" to={"recette/" + data.id}>
+            <Link className="card-info" to={"recipe/" + data.id}>
                 <img src={data.photo} alt={data.titre} />
                 <div className="card-text">
                     <h3>{data.titre}</h3>

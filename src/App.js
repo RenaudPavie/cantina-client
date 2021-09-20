@@ -19,7 +19,7 @@ function App() {
         {/* Accueil */}
         <Route path="/" component={Accueil} exact />
         {/* Recette */}
-        <Route path="/recette/:id" component={Recipe} />
+        <Route path="/recipe/:id" component={Recipe} />
         {/* Formulaire d'ajout de recette */}
         <Route path="/new-recipe" component={AddRecipe} />
         {/* Formulaire de modification de recette */}
